@@ -3,505 +3,582 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="新感覚リアルタイム対戦パズルゲーム「ヘキサゴン」の公式ページです。同じ色をつなげて消し、形作りと大連鎖で勝利を掴もう。">
+  <meta name="description" content="リアルタイム対戦パズルゲーム「ヘキサゴン」の公式サイトです。6つのボールをつなげ、フォーメーションと連鎖で勝利を目指そう。">
   <title>ヘキサゴン 公式サイト</title>
   <style>
     :root {
       color-scheme: dark;
-      --bg: #060712;
-      --surface: rgba(14, 18, 34, .82);
-      --surface2: rgba(255, 255, 255, .055);
-      --line: rgba(255, 255, 255, .14);
-      --text: #f8fbff;
-      --muted: #aeb8cf;
-      --subtle: #7f8aa5;
-      --cyan: #26d9ff;
-      --pink: #ff4bd8;
-      --gold: #ffd45f;
+      --bg: #07080d;
+      --ink: #f7fbff;
+      --muted: #aeb7c7;
+      --line: rgba(255, 255, 255, .16);
+      --panel: rgba(255, 255, 255, .075);
+      --cyan: #25d7ff;
+      --mint: #59ffb9;
+      --pink: #ff4fc7;
+      --amber: #ffd56b;
+      --danger: #ff6a6a;
     }
+
     * { box-sizing: border-box; }
+
     html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+      min-width: 320px;
       background:
-        radial-gradient(circle at 18% 0%, rgba(38, 217, 255, .20), transparent 32%),
-        radial-gradient(circle at 78% 10%, rgba(255, 75, 216, .16), transparent 30%),
-        linear-gradient(180deg, #060712 0%, #0b1021 46%, #060712 100%);
-      color: var(--text);
+        linear-gradient(130deg, rgba(37, 215, 255, .12), transparent 36%),
+        linear-gradient(230deg, rgba(255, 79, 199, .13), transparent 34%),
+        #07080d;
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
       line-height: 1.75;
     }
+
     a { color: inherit; }
-    header {
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .site-header {
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 20;
       border-bottom: 1px solid var(--line);
-      background: rgba(6, 7, 18, .78);
-      backdrop-filter: blur(16px);
+      background: rgba(7, 8, 13, .82);
+      backdrop-filter: blur(18px);
     }
-    nav {
-      max-width: 1160px;
+
+    .nav {
+      width: min(1160px, calc(100% - 32px));
+      min-height: 68px;
       margin: 0 auto;
-      padding: 13px 22px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
+      gap: 18px;
     }
+
     .brand {
-      font-weight: 950;
-      letter-spacing: .06em;
-    }
-    .links {
       display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      color: var(--muted);
-      font-size: 14px;
-    }
-    .links a {
+      flex-direction: column;
+      line-height: 1.1;
       text-decoration: none;
-      transition: color .18s ease;
+      white-space: nowrap;
     }
-    .links a:hover { color: var(--text); }
-    main {
-      max-width: 1160px;
-      margin: 0 auto;
-      padding: 44px 22px 84px;
+
+    .brand strong {
+      font-size: 20px;
+      font-weight: 950;
+      letter-spacing: .08em;
     }
-    .hero {
-      display: grid;
-      gap: 34px;
-      padding: 26px 0 58px;
+
+    .brand span {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .16em;
     }
-    .hero-copy {
-      max-width: 900px;
+
+    .tabs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 8px 0;
+      scrollbar-width: none;
     }
-    .eyebrow {
-      display: inline-flex;
-      width: fit-content;
-      border: 1px solid rgba(38, 217, 255, .40);
-      border-radius: 999px;
-      padding: 5px 12px;
-      color: #c6f7ff;
-      background: rgba(38, 217, 255, .09);
+
+    .tabs::-webkit-scrollbar { display: none; }
+
+    .tabs a {
+      flex: 0 0 auto;
+      border: 1px solid rgba(255, 255, 255, .13);
+      border-radius: 8px;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, .055);
+      color: #e8eefb;
       font-size: 13px;
       font-weight: 900;
+      text-decoration: none;
+      transition: border-color .18s ease, background .18s ease, color .18s ease;
     }
+
+    .tabs a:hover,
+    .tabs a:focus-visible {
+      border-color: rgba(37, 215, 255, .66);
+      background: rgba(37, 215, 255, .12);
+      color: #fff;
+      outline: none;
+    }
+
+    main {
+      width: min(1160px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      min-height: calc(100svh - 68px);
+      display: grid;
+      grid-template-columns: minmax(0, .92fr) minmax(320px, 1.08fr);
+      align-items: center;
+      gap: clamp(28px, 5vw, 64px);
+      padding: 34px 0 56px;
+    }
+
+    .kicker {
+      display: inline-flex;
+      width: fit-content;
+      border: 1px solid rgba(89, 255, 185, .44);
+      border-radius: 8px;
+      padding: 5px 10px;
+      background: rgba(89, 255, 185, .08);
+      color: #c8ffe9;
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: .12em;
+    }
+
     h1 {
-      margin: 16px 0 14px;
-      font-size: clamp(58px, 12vw, 132px);
+      margin: 18px 0 14px;
+      font-size: clamp(56px, 10.5vw, 126px);
       line-height: .92;
-      letter-spacing: .02em;
-      text-shadow: 0 0 30px rgba(38, 217, 255, .34);
+      letter-spacing: .03em;
     }
+
     .lead {
+      max-width: 680px;
       margin: 0;
-      max-width: 780px;
-      color: var(--muted);
-      font-size: clamp(17px, 2.4vw, 24px);
+      color: #d8e0ef;
+      font-size: clamp(17px, 2vw, 23px);
       font-weight: 850;
     }
-    .actions {
+
+    .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
       margin-top: 26px;
     }
+
     .button {
       display: inline-flex;
       min-height: 46px;
       align-items: center;
       justify-content: center;
-      padding: 0 18px;
       border: 1px solid var(--line);
       border-radius: 8px;
+      padding: 0 18px;
       background: rgba(255, 255, 255, .07);
+      color: var(--ink);
+      font-weight: 950;
       text-decoration: none;
-      font-weight: 900;
+      cursor: pointer;
     }
+
     .button.primary {
-      border: 0;
-      color: #06111a;
-      background: linear-gradient(90deg, var(--cyan), #b8f6ff);
-      box-shadow: 0 0 26px rgba(38, 217, 255, .22);
+      border-color: transparent;
+      background: linear-gradient(90deg, var(--cyan), var(--mint));
+      color: #031116;
+      box-shadow: 0 16px 42px rgba(37, 215, 255, .24);
     }
-    .hero-visual {
-      position: relative;
-      padding: 10px;
-      border: 1px solid rgba(255, 255, 255, .15);
-      border-radius: 12px;
-      background: linear-gradient(135deg, rgba(38, 217, 255, .16), rgba(255, 75, 216, .12));
-      box-shadow: 0 30px 90px rgba(0, 0, 0, .46);
+
+    .hero-media {
+      display: grid;
+      gap: 14px;
+      align-content: center;
     }
-    .hero-visual img {
-      width: 100%;
-      display: block;
+
+    .feature-shot {
+      border: 1px solid rgba(255, 255, 255, .16);
       border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, .18);
+      overflow: hidden;
+      background: #0b0d14;
+      box-shadow: 0 28px 80px rgba(0, 0, 0, .48);
     }
-    .stats {
+
+    .phone-strip {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 10px;
-      margin-top: 14px;
     }
-    .stat {
-      padding: 14px;
-      border: 1px solid var(--line);
+
+    .phone-strip img,
+    .ipad-grid img,
+    .contact-preview img {
+      border: 1px solid rgba(255, 255, 255, .16);
       border-radius: 8px;
-      background: rgba(255, 255, 255, .055);
+      background: #0b0d14;
+      box-shadow: 0 20px 56px rgba(0, 0, 0, .35);
     }
-    .stat strong {
-      display: block;
-      font-size: 20px;
-      color: #fff;
-    }
-    .stat span {
-      color: var(--subtle);
-      font-size: 13px;
-      font-weight: 700;
-    }
+
     section {
-      padding: 58px 0;
+      padding: 68px 0;
       border-top: 1px solid var(--line);
     }
+
     .section-head {
-      max-width: 760px;
+      display: grid;
+      grid-template-columns: minmax(0, .72fr) minmax(240px, .28fr);
+      gap: 24px;
+      align-items: end;
       margin-bottom: 26px;
     }
+
     h2 {
-      margin: 0 0 12px;
-      font-size: clamp(29px, 4.6vw, 48px);
-      line-height: 1.18;
-      letter-spacing: .01em;
+      margin: 0;
+      font-size: clamp(30px, 5vw, 58px);
+      line-height: 1.1;
+      letter-spacing: .02em;
     }
-    .section-lead {
+
+    .section-head p {
       margin: 0;
       color: var(--muted);
-      font-size: 17px;
-      font-weight: 750;
+      font-weight: 800;
     }
-    .split {
-      display: grid;
-      grid-template-columns: minmax(0, .9fr) minmax(300px, 1.1fr);
-      gap: 34px;
-      align-items: center;
-    }
-    .split.reverse {
-      grid-template-columns: minmax(300px, 1.1fr) minmax(0, .9fr);
-    }
-    .image-frame {
-      padding: 8px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, .14);
-      background: rgba(255, 255, 255, .055);
-      box-shadow: 0 24px 70px rgba(0, 0, 0, .36);
-    }
-    .image-frame img {
-      width: 100%;
-      display: block;
-      border-radius: 7px;
-    }
-    .points {
-      display: grid;
-      gap: 12px;
-      margin-top: 22px;
-    }
-    .point {
-      padding: 15px 16px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--surface2);
-    }
-    .point strong {
-      display: block;
-      margin-bottom: 4px;
-      color: #fff;
-      font-size: 17px;
-    }
-    .point p {
-      margin: 0;
-      color: var(--muted);
-    }
-    .waza-grid {
+
+    .play-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
-      margin-top: 24px;
     }
-    .waza {
-      min-height: 150px;
-      padding: 18px;
+
+    .play-card {
+      min-height: 190px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .035));
+      padding: 20px;
+      background: var(--panel);
     }
-    .waza small {
+
+    .play-card small {
       display: inline-flex;
-      margin-bottom: 14px;
+      margin-bottom: 18px;
       color: var(--cyan);
       font-weight: 950;
-      letter-spacing: .08em;
+      letter-spacing: .12em;
     }
-    .waza:nth-child(2) small { color: var(--gold); }
-    .waza:nth-child(3) small { color: var(--pink); }
-    .waza h3 {
+
+    .play-card:nth-child(2) small { color: var(--amber); }
+    .play-card:nth-child(3) small { color: var(--pink); }
+
+    .play-card h3 {
       margin: 0 0 8px;
       font-size: 22px;
+      line-height: 1.25;
     }
-    .waza p {
+
+    .play-card p {
       margin: 0;
       color: var(--muted);
+      font-weight: 700;
     }
-    .mode-list {
+
+    .showcase {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(320px, 1.1fr);
+      gap: 24px;
+      align-items: center;
+    }
+
+    .showcase-copy {
+      display: grid;
+      gap: 14px;
+    }
+
+    .note {
+      border-left: 4px solid var(--cyan);
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, .055);
+      color: #dfe8f5;
+      font-weight: 800;
+    }
+
+    .ipad-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
+      gap: 10px;
     }
-    .mode {
-      padding: 18px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--surface);
-    }
-    .mode h3 {
-      margin: 0 0 8px;
-      font-size: 19px;
-    }
-    .mode p {
-      margin: 0;
-      color: var(--muted);
-    }
+
     .gallery {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(6, minmax(150px, 1fr));
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 10px;
     }
+
     .gallery img {
       width: 100%;
-      display: block;
-      border-radius: 8px;
+      min-width: 150px;
       border: 1px solid rgba(255, 255, 255, .16);
-      box-shadow: 0 18px 56px rgba(0, 0, 0, .32);
+      border-radius: 8px;
+      background: #0b0d14;
     }
-    .recommend {
+
+    .contact-layout {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin: 24px 0 0;
-      padding: 0;
-      list-style: none;
+      grid-template-columns: minmax(0, .95fr) minmax(280px, 1.05fr);
+      gap: 24px;
+      align-items: start;
     }
-    .recommend li {
+
+    .contact-form {
+      display: grid;
+      gap: 14px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: rgba(255, 255, 255, .055);
-      padding: 13px 15px;
-      color: var(--muted);
-      font-weight: 750;
+      padding: 20px;
+      background: rgba(255, 255, 255, .07);
     }
-    footer {
-      border-top: 1px solid var(--line);
+
+    label {
+      display: grid;
+      gap: 7px;
+      color: #eaf1fb;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, .18);
+      border-radius: 8px;
+      padding: 12px 13px;
+      background: rgba(0, 0, 0, .28);
+      color: var(--ink);
+      font: inherit;
+      font-weight: 700;
+    }
+
+    textarea {
+      min-height: 132px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: rgba(37, 215, 255, .85);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(37, 215, 255, .14);
+    }
+
+    .form-help {
+      margin: 0;
       color: var(--muted);
       font-size: 13px;
-      padding: 24px 20px;
+      font-weight: 750;
+    }
+
+    .contact-preview {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 16px;
+      color: var(--muted);
       text-align: center;
+      font-size: 13px;
     }
+
     footer p { margin: 6px 0; }
-    @media (max-width: 900px) {
-      .split, .split.reverse { grid-template-columns: 1fr; }
-      .split.reverse .image-frame { order: 2; }
-      .split.reverse > div:last-child { order: 1; }
-      .stats, .waza-grid, .mode-list { grid-template-columns: 1fr; }
+
+    footer a { text-decoration: none; }
+
+    @media (max-width: 980px) {
+      .hero,
+      .showcase,
+      .contact-layout,
+      .section-head {
+        grid-template-columns: 1fr;
+      }
+
+      .play-grid { grid-template-columns: 1fr; }
     }
+
     @media (max-width: 720px) {
-      nav { align-items: flex-start; flex-direction: column; }
-      main { padding-top: 28px; }
-      .gallery, .recommend { grid-template-columns: 1fr; }
-      section { padding: 44px 0; }
+      .nav {
+        min-height: auto;
+        padding: 12px 0;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 28px;
+      }
+
+      .phone-strip { grid-template-columns: repeat(3, minmax(92px, 1fr)); }
+      .ipad-grid { grid-template-columns: 1fr; }
+      .contact-preview { grid-template-columns: 1fr; }
+      section { padding: 48px 0; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <div class="brand">ヘキサゴン</div>
-      <div class="links">
-        <a href="#rule">ルール</a>
-        <a href="#waza">フォーメーション</a>
-        <a href="#mode">モード</a>
+  <header class="site-header">
+    <nav class="nav" aria-label="サイト内ナビゲーション">
+      <a class="brand" href="./index.html" aria-label="ヘキサゴン公式サイト ホーム">
+        <strong>ヘキサゴン</strong>
+        <span>OFFICIAL SITE</span>
+      </a>
+      <div class="tabs">
         <a href="./terms.html">利用規約</a>
         <a href="./privacy.html">プライバシーポリシー</a>
         <a href="./tokushoho.html">特定商取引法表記</a>
+        <a href="#contact">お問い合わせ</a>
       </div>
     </nav>
   </header>
 
   <main>
     <section class="hero" aria-label="ヘキサゴン">
-      <div class="hero-copy">
-        <span class="eyebrow">リアルタイム対戦パズル</span>
-        <h1>ヘキサゴン</h1>
-        <p class="lead">同じ色を6つ繋げて消すだけ。形を作る「フォーメーション」と大連鎖で流れを変える、リアルタイム対戦パズルゲーム。</p>
-        <div class="actions">
-          <a class="button primary" href="#rule">ゲームを見る</a>
-          <a class="button" href="mailto:takutonkatsu.dev@gmail.com">お問い合わせ</a>
+      <div>
+        <span class="kicker">REALTIME HEX PUZZLE BATTLE</span>
+        <h1>つなげて、組んで、ぶつけ合う。</h1>
+        <p class="lead">同じ色を6つつなげる直感的なパズルに、形で攻めるフォーメーションとリアルタイム対戦の読み合いを加えた、新感覚バトルパズル。</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#contact">お問い合わせ</a>
+          <a class="button" href="./privacy.html">プライバシーポリシー</a>
         </div>
       </div>
-      <div class="hero-visual">
-        <img src="./assets/images/Android_Feature_image.png" alt="ヘキサゴンのキービジュアル">
-      </div>
-      <div class="stats" aria-label="ゲームの特徴">
-        <div class="stat"><strong>6つ繋げる</strong><span>直感的な基本ルール</span></div>
-        <div class="stat"><strong>フォーメーション発動</strong><span>形で戦況を変える</span></div>
-        <div class="stat"><strong>リアルタイム</strong><span>読み合いの対戦体験</span></div>
-      </div>
-    </section>
-
-    <section id="rule">
-      <div class="split">
-        <div>
-          <div class="section-head">
-            <h2>シンプルなのに、深い。</h2>
-            <p class="section-lead">盤面のボール列を横にスライドし、回転で形を整える。同じ色を6つ以上繋げて消し、対戦では妨害ボールで相手にプレッシャーをかけます。</p>
-          </div>
-          <div class="points">
-            <div class="point">
-              <strong>横スライドと回転で操る</strong>
-              <p>列を動かし、狙った場所へボールを運ぶ直感的な操作。</p>
-            </div>
-            <div class="point">
-              <strong>同じ色を繋げて消す</strong>
-              <p>同じ色を6つ以上繋げるだけで消えるから、初めてでもすぐに戦えます。</p>
-            </div>
-            <div class="point">
-              <strong>相手を追い詰める</strong>
-              <p>連鎖で送る妨害ボールが、対戦相手の盤面を圧迫します。</p>
-            </div>
-          </div>
+      <div class="hero-media">
+        <div class="feature-shot">
+          <img src="./assets/images/appstore/android-feature.png" alt="ヘキサゴンのキービジュアル">
         </div>
-        <div class="image-frame">
-          <img src="./assets/images/ヘキサゴン_Promo画像_02.png" alt="ヘキサゴンの操作説明画面">
+        <div class="phone-strip" aria-label="ゲーム画面プレビュー">
+          <img src="./assets/images/appstore/iphone-01.png" alt="ヘキサゴンのタイトルとゲーム紹介">
+          <img src="./assets/images/appstore/iphone-02.png" alt="ヘキサゴンの基本操作画面">
+          <img src="./assets/images/appstore/iphone-03.png" alt="ヘキサゴンのリアルタイム対戦画面">
         </div>
       </div>
     </section>
 
-    <section id="waza">
+    <section aria-labelledby="play-title">
       <div class="section-head">
-        <h2>形で攻める「フォーメーション」。</h2>
-        <p class="section-lead">特定の形にボールを揃えることで、フォーメーションが発動。小さく消して耐えるか、大きな形を狙って流れを変えるか。戦略が勝敗を分けます。</p>
+        <h2 id="play-title">シンプルなルールに、勝負の厚み。</h2>
+        <p>ボールを動かす、6つつなげる、形を作る。わかりやすい操作の中に、盤面づくりと一手先を読む駆け引きがあります。</p>
       </div>
-      <div class="waza-grid">
-        <article class="waza">
-          <small>STRAIGHT</small>
-          <h3>ストレート</h3>
-          <p>狙いやすく扱いやすい基本のフォーメーション。盤面を整えながらプレッシャーをかけます。</p>
+      <div class="play-grid">
+        <article class="play-card">
+          <small>CONNECT</small>
+          <h3>6つ以上つなげて消す</h3>
+          <p>同じ色のボールをつなげて消すだけ。短時間でもテンポよく遊べます。</p>
         </article>
-        <article class="waza">
-          <small>PYRAMID</small>
-          <h3>ピラミッド</h3>
-          <p>形を読む力が試される技巧派のフォーメーション。狙って組むほど試合を有利に進められます。</p>
+        <article class="play-card">
+          <small>FORMATION</small>
+          <h3>形でフォーメーション発動</h3>
+          <p>狙った形を作ることで、ただ消すだけではない戦略的な攻めが生まれます。</p>
         </article>
-        <article class="waza">
-          <small>HEXAGON</small>
-          <h3>ヘキサゴン</h3>
-          <p>大きく流れを変えられる強力なフォーメーション。ここぞという場面の切り札です。</p>
+        <article class="play-card">
+          <small>BATTLE</small>
+          <h3>リアルタイムで競り合う</h3>
+          <p>相手の盤面にプレッシャーをかけながら、自分の盤面を立て直します。</p>
         </article>
       </div>
     </section>
 
-    <section id="mode">
-      <div class="split reverse">
-        <div class="image-frame">
-          <img src="./assets/images/ヘキサゴン_Promo画像_03.png" alt="ヘキサゴンの対戦画面">
+    <section aria-labelledby="mode-title">
+      <div class="showcase">
+        <div class="showcase-copy">
+          <span class="kicker">RANK / ENDLESS / FRIEND</span>
+          <h2 id="mode-title">腕を磨くほど、盤面が見えてくる。</h2>
+          <p class="note">ランク戦、エンドレス、フレンド対戦、コンピュータ対戦で、自分のペースでも真剣勝負でも楽しめます。</p>
         </div>
-        <div>
-          <div class="section-head">
-            <h2>遊び方に合わせて腕を磨く。</h2>
-            <p class="section-lead">全国のプレイヤーとの真剣勝負から、一人でじっくり練習するモードまで用意しています。</p>
-          </div>
-          <div class="mode-list">
-            <article class="mode">
-              <h3>ランク戦</h3>
-              <p>同格のライバルとレートを奪い合い、ランキングの頂点を目指すメインモード。</p>
-            </article>
-            <article class="mode">
-              <h3>エンドレス</h3>
-              <p>ハイスコアを叩き出し、パズル力を極限まで磨き上げるソロモード。</p>
-            </article>
-            <article class="mode">
-              <h3>フレンド対戦・コンピュータ対戦</h3>
-              <p>友達と気軽にバトルしたり、一人でコンボやフォーメーションの練習ができます。</p>
-            </article>
-          </div>
+        <div class="ipad-grid" aria-label="iPad画面プレビュー">
+          <img src="./assets/images/appstore/ipad-01.png" alt="ヘキサゴンのiPad紹介画面1">
+          <img src="./assets/images/appstore/ipad-03.png" alt="ヘキサゴンのiPad対戦画面">
+          <img src="./assets/images/appstore/ipad-05.png" alt="ヘキサゴンのiPadモード紹介画面">
         </div>
       </div>
     </section>
 
-    <section>
-      <div class="split">
-        <div>
-          <div class="section-head">
-            <h2>個性が見えるプロフィール。</h2>
-            <p class="section-lead">過去の戦績からプレイスタイルを六角形のレーダーチャートで分析。対戦中はエモートやスタンプでリアルタイムに感情を伝えられます。</p>
-          </div>
-          <div class="points">
-            <div class="point">
-              <strong>レーダーチャート</strong>
-              <p>自分がどんな戦い方をするプレイヤーなのかを可視化。</p>
-            </div>
-            <div class="point">
-              <strong>エモートとスタンプ</strong>
-              <p>「よろしく！」「ありがとう！」「グッドゲーム！」でバトルを盛り上げます。</p>
-            </div>
-          </div>
-        </div>
-        <div class="image-frame">
-          <img src="./assets/images/ヘキサゴン_Promo画像_04.png" alt="ヘキサゴンのプロフィールとスタンプ機能">
-        </div>
-      </div>
-    </section>
-
-    <section>
+    <section aria-labelledby="screens-title">
       <div class="section-head">
-        <h2>スクリーンショット</h2>
-        <p class="section-lead">ゲームの雰囲気と各機能を、実際の画面で確認できます。</p>
+        <h2 id="screens-title">スクリーンショット</h2>
+        <p>ゲームのルール、対戦、ランキング、プロフィールまで、実際の画面で雰囲気を確認できます。</p>
       </div>
       <div class="gallery">
-        <img src="./assets/images/ヘキサゴン_Promo画像_01.png" alt="ヘキサゴンのプロモーション画像1">
-        <img src="./assets/images/ヘキサゴン_Promo画像_02.png" alt="ヘキサゴンのプロモーション画像2">
-        <img src="./assets/images/ヘキサゴン_Promo画像_03.png" alt="ヘキサゴンのプロモーション画像3">
-        <img src="./assets/images/ヘキサゴン_Promo画像_04.png" alt="ヘキサゴンのプロモーション画像4">
+        <img src="./assets/images/appstore/iphone-01.png" alt="ヘキサゴンのスクリーンショット1">
+        <img src="./assets/images/appstore/iphone-02.png" alt="ヘキサゴンのスクリーンショット2">
+        <img src="./assets/images/appstore/iphone-03.png" alt="ヘキサゴンのスクリーンショット3">
+        <img src="./assets/images/appstore/iphone-04.png" alt="ヘキサゴンのスクリーンショット4">
+        <img src="./assets/images/appstore/iphone-05.png" alt="ヘキサゴンのスクリーンショット5">
+        <img src="./assets/images/appstore/iphone-06.png" alt="ヘキサゴンのスクリーンショット6">
       </div>
     </section>
 
-    <section>
+    <section id="contact" aria-labelledby="contact-title">
       <div class="section-head">
-        <h2>こんな人におすすめ。</h2>
+        <h2 id="contact-title">お問い合わせ</h2>
+        <p>不具合、データ削除、購入、ランキングなどについて連絡できます。メール本文にプレイヤー情報を自動で入れます。</p>
       </div>
-      <ul class="recommend">
-        <li>対戦ゲームのヒリヒリする緊張感が好き</li>
-        <li>パズルゲームの大連鎖に爽快感を求めている</li>
-        <li>レートやランキングを上げるためにやり込むのが好き</li>
-        <li>実力勝負のeスポーツライクなゲームを探している</li>
-        <li>暇つぶしで頭の体操をしたい</li>
-      </ul>
-    </section>
-
-    <section>
-      <div class="section-head">
-        <h2>サポート</h2>
-        <p class="section-lead">不具合、データ削除、その他のお問い合わせは、以下のメールアドレスまでご連絡ください。</p>
+      <div class="contact-layout">
+        <form class="contact-form" id="contactForm">
+          <label>
+            プレイヤー名
+            <input id="playerName" name="playerName" type="text" autocomplete="name" placeholder="例: Takuto">
+          </label>
+          <label>
+            プレイヤーID
+            <input id="playerId" name="playerId" type="text" inputmode="text" placeholder="例: ABCD-1234">
+          </label>
+          <label>
+            お問い合わせ内容
+            <textarea id="message" name="message" placeholder="できるだけ詳しく状況をご記入ください。"></textarea>
+          </label>
+          <p class="form-help">メールアプリが開き、入力内容を本文に入れた状態で送信準備をします。</p>
+          <button class="button primary" type="submit">メールを作成</button>
+        </form>
+        <div class="contact-preview" aria-label="お問い合わせ画面プレビュー">
+          <img src="./assets/images/appstore/contact-iphone.png" alt="iPhoneのお問い合わせ案内画面">
+          <img src="./assets/images/appstore/contact-ipad.png" alt="iPadのお問い合わせ案内画面">
+        </div>
       </div>
-      <p><a href="mailto:takutonkatsu.dev@gmail.com">takutonkatsu.dev@gmail.com</a></p>
     </section>
   </main>
 
   <footer>
-    <p><a href="./terms.html">利用規約</a> / <a href="./privacy.html">プライバシーポリシー</a> / <a href="./tokushoho.html">特定商取引法表記</a></p>
+    <p><a href="./terms.html">利用規約</a> / <a href="./privacy.html">プライバシーポリシー</a> / <a href="./tokushoho.html">特定商取引法表記</a> / <a href="#contact">お問い合わせ</a></p>
     <p>&copy; 2026 Takutonkatsu. All rights reserved.</p>
   </footer>
+
+  <script>
+    const form = document.getElementById('contactForm');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const playerName = document.getElementById('playerName').value.trim();
+      const playerId = document.getElementById('playerId').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const body = [
+        'ヘキサゴンについて問い合わせます。',
+        '',
+        `プレイヤー名: ${playerName || '未入力'}`,
+        `プレイヤーID: ${playerId || '未入力'}`,
+        '',
+        'お問い合わせ内容:',
+        message || '未入力',
+        '',
+        '---',
+        '送信前に内容をご確認ください。'
+      ].join('\n');
+      const subject = 'ヘキサゴン お問い合わせ';
+      const mailto = `mailto:takutonkatsu.dev@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+      window.location.href = mailto;
+    });
+  </script>
 </body>
 </html>
