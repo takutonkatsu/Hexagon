@@ -3,21 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="リアルタイム対戦パズルゲーム「ヘキサゴン」の公式サイトです。6つのボールをつなげ、フォーメーションと連鎖で勝利を目指そう。">
+  <meta name="description" content="リアルタイム対戦パズルゲーム「ヘキサゴン」の公式サイトです。">
   <title>ヘキサゴン 公式サイト</title>
   <style>
     :root {
       color-scheme: dark;
-      --bg: #07080d;
-      --ink: #f7fbff;
-      --muted: #aeb7c7;
-      --line: rgba(255, 255, 255, .16);
-      --panel: rgba(255, 255, 255, .075);
-      --cyan: #25d7ff;
-      --mint: #59ffb9;
-      --pink: #ff4fc7;
-      --amber: #ffd56b;
-      --danger: #ff6a6a;
+      --bg: #080a10;
+      --panel: #111620;
+      --panel-soft: #151b27;
+      --text: #f6f8fb;
+      --muted: #aeb7c6;
+      --line: rgba(255, 255, 255, .14);
+      --cyan: #22d3ee;
+      --green: #78f0b4;
     }
 
     * { box-sizing: border-box; }
@@ -27,11 +25,8 @@
     body {
       margin: 0;
       min-width: 320px;
-      background:
-        linear-gradient(130deg, rgba(37, 215, 255, .12), transparent 36%),
-        linear-gradient(230deg, rgba(255, 79, 199, .13), transparent 34%),
-        #07080d;
-      color: var(--ink);
+      background: var(--bg);
+      color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
       line-height: 1.75;
     }
@@ -40,306 +35,185 @@
 
     img {
       display: block;
-      max-width: 100%;
+      width: 100%;
+      height: auto;
     }
 
     .site-header {
       position: sticky;
       top: 0;
-      z-index: 20;
+      z-index: 10;
       border-bottom: 1px solid var(--line);
-      background: rgba(7, 8, 13, .82);
-      backdrop-filter: blur(18px);
+      background: rgba(8, 10, 16, .92);
+      backdrop-filter: blur(14px);
     }
 
     .nav {
-      width: min(1160px, calc(100% - 32px));
-      min-height: 68px;
+      width: min(1120px, calc(100% - 32px));
       margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      padding: 14px 0;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
       gap: 18px;
+      align-items: center;
     }
 
     .brand {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
       text-decoration: none;
       white-space: nowrap;
     }
 
     .brand strong {
+      display: block;
       font-size: 20px;
       font-weight: 950;
       letter-spacing: .08em;
+      line-height: 1.1;
     }
 
     .brand span {
+      display: block;
       color: var(--muted);
       font-size: 11px;
       font-weight: 800;
-      letter-spacing: .16em;
+      letter-spacing: .14em;
+      line-height: 1.1;
     }
 
     .tabs {
-      display: flex;
-      align-items: center;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 8px;
-      overflow-x: auto;
-      padding: 8px 0;
-      scrollbar-width: none;
     }
 
-    .tabs::-webkit-scrollbar { display: none; }
-
     .tabs a {
-      flex: 0 0 auto;
-      border: 1px solid rgba(255, 255, 255, .13);
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
       border-radius: 8px;
-      padding: 8px 12px;
-      background: rgba(255, 255, 255, .055);
-      color: #e8eefb;
+      padding: 8px 10px;
+      background: var(--panel);
+      color: #eef4fb;
       font-size: 13px;
       font-weight: 900;
+      line-height: 1.25;
+      text-align: center;
       text-decoration: none;
-      transition: border-color .18s ease, background .18s ease, color .18s ease;
     }
 
     .tabs a:hover,
     .tabs a:focus-visible {
-      border-color: rgba(37, 215, 255, .66);
-      background: rgba(37, 215, 255, .12);
-      color: #fff;
+      border-color: rgba(34, 211, 238, .8);
       outline: none;
     }
 
     main {
-      width: min(1160px, calc(100% - 32px));
+      width: min(1120px, calc(100% - 32px));
       margin: 0 auto;
     }
 
     .hero {
-      min-height: calc(100svh - 68px);
+      padding: 48px 0 54px;
       display: grid;
-      grid-template-columns: minmax(0, .92fr) minmax(320px, 1.08fr);
-      align-items: center;
-      gap: clamp(28px, 5vw, 64px);
-      padding: 34px 0 56px;
+      gap: 28px;
+    }
+
+    .hero-copy {
+      max-width: 860px;
     }
 
     .kicker {
-      display: inline-flex;
-      width: fit-content;
-      border: 1px solid rgba(89, 255, 185, .44);
-      border-radius: 8px;
-      padding: 5px 10px;
-      background: rgba(89, 255, 185, .08);
-      color: #c8ffe9;
-      font-size: 12px;
+      margin: 0 0 10px;
+      color: var(--green);
+      font-size: 13px;
       font-weight: 950;
       letter-spacing: .12em;
     }
 
     h1 {
-      margin: 18px 0 14px;
-      font-size: clamp(56px, 10.5vw, 126px);
-      line-height: .92;
+      margin: 0 0 14px;
+      font-size: clamp(42px, 8vw, 92px);
+      line-height: 1;
       letter-spacing: .03em;
     }
 
     .lead {
-      max-width: 680px;
       margin: 0;
-      color: #d8e0ef;
-      font-size: clamp(17px, 2vw, 23px);
-      font-weight: 850;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: clamp(16px, 2vw, 22px);
+      font-weight: 800;
     }
 
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 26px;
-    }
-
-    .button {
-      display: inline-flex;
-      min-height: 46px;
-      align-items: center;
-      justify-content: center;
+    .hero-image {
+      overflow: hidden;
       border: 1px solid var(--line);
       border-radius: 8px;
-      padding: 0 18px;
-      background: rgba(255, 255, 255, .07);
-      color: var(--ink);
-      font-weight: 950;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .button.primary {
-      border-color: transparent;
-      background: linear-gradient(90deg, var(--cyan), var(--mint));
-      color: #031116;
-      box-shadow: 0 16px 42px rgba(37, 215, 255, .24);
-    }
-
-    .hero-media {
-      display: grid;
-      gap: 14px;
-      align-content: center;
-    }
-
-    .feature-shot {
-      border: 1px solid rgba(255, 255, 255, .16);
-      border-radius: 8px;
-      overflow: hidden;
-      background: #0b0d14;
-      box-shadow: 0 28px 80px rgba(0, 0, 0, .48);
-    }
-
-    .phone-strip {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .phone-strip img,
-    .ipad-grid img,
-    .contact-preview img {
-      border: 1px solid rgba(255, 255, 255, .16);
-      border-radius: 8px;
-      background: #0b0d14;
-      box-shadow: 0 20px 56px rgba(0, 0, 0, .35);
+      background: var(--panel);
     }
 
     section {
-      padding: 68px 0;
+      padding: 48px 0;
       border-top: 1px solid var(--line);
     }
 
     .section-head {
-      display: grid;
-      grid-template-columns: minmax(0, .72fr) minmax(240px, .28fr);
-      gap: 24px;
-      align-items: end;
-      margin-bottom: 26px;
+      margin-bottom: 20px;
     }
 
     h2 {
-      margin: 0;
-      font-size: clamp(30px, 5vw, 58px);
-      line-height: 1.1;
-      letter-spacing: .02em;
+      margin: 0 0 8px;
+      font-size: clamp(28px, 5vw, 48px);
+      line-height: 1.15;
     }
 
     .section-head p {
       margin: 0;
       color: var(--muted);
-      font-weight: 800;
+      font-weight: 750;
     }
 
-    .play-grid {
+    .screenshots {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
     }
 
-    .play-card {
-      min-height: 190px;
+    .screenshots img {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-soft);
+    }
+
+    .wide-screenshots {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .wide-screenshots img {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-soft);
+    }
+
+    .contact-form {
+      max-width: 680px;
+      display: grid;
+      gap: 14px;
       border: 1px solid var(--line);
       border-radius: 8px;
       padding: 20px;
       background: var(--panel);
     }
 
-    .play-card small {
-      display: inline-flex;
-      margin-bottom: 18px;
-      color: var(--cyan);
-      font-weight: 950;
-      letter-spacing: .12em;
-    }
-
-    .play-card:nth-child(2) small { color: var(--amber); }
-    .play-card:nth-child(3) small { color: var(--pink); }
-
-    .play-card h3 {
-      margin: 0 0 8px;
-      font-size: 22px;
-      line-height: 1.25;
-    }
-
-    .play-card p {
-      margin: 0;
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .showcase {
-      display: grid;
-      grid-template-columns: minmax(0, .9fr) minmax(320px, 1.1fr);
-      gap: 24px;
-      align-items: center;
-    }
-
-    .showcase-copy {
-      display: grid;
-      gap: 14px;
-    }
-
-    .note {
-      border-left: 4px solid var(--cyan);
-      padding: 14px 16px;
-      background: rgba(255, 255, 255, .055);
-      color: #dfe8f5;
-      font-weight: 800;
-    }
-
-    .ipad-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(150px, 1fr));
-      gap: 10px;
-      overflow-x: auto;
-      padding-bottom: 10px;
-    }
-
-    .gallery img {
-      width: 100%;
-      min-width: 150px;
-      border: 1px solid rgba(255, 255, 255, .16);
-      border-radius: 8px;
-      background: #0b0d14;
-    }
-
-    .contact-layout {
-      display: grid;
-      grid-template-columns: minmax(0, .95fr) minmax(280px, 1.05fr);
-      gap: 24px;
-      align-items: start;
-    }
-
-    .contact-form {
-      display: grid;
-      gap: 14px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 20px;
-      background: rgba(255, 255, 255, .07);
-    }
-
     label {
       display: grid;
       gap: 7px;
-      color: #eaf1fb;
+      color: #eef4fb;
       font-size: 14px;
       font-weight: 900;
     }
@@ -350,8 +224,8 @@
       border: 1px solid rgba(255, 255, 255, .18);
       border-radius: 8px;
       padding: 12px 13px;
-      background: rgba(0, 0, 0, .28);
-      color: var(--ink);
+      background: #090d14;
+      color: var(--text);
       font: inherit;
       font-weight: 700;
     }
@@ -363,9 +237,8 @@
 
     input:focus,
     textarea:focus {
-      border-color: rgba(37, 215, 255, .85);
+      border-color: rgba(34, 211, 238, .85);
       outline: none;
-      box-shadow: 0 0 0 3px rgba(37, 215, 255, .14);
     }
 
     .form-help {
@@ -375,11 +248,16 @@
       font-weight: 750;
     }
 
-    .contact-preview {
-      display: grid;
-      grid-template-columns: .9fr 1.1fr;
-      gap: 12px;
-      align-items: start;
+    .button {
+      min-height: 46px;
+      border: 0;
+      border-radius: 8px;
+      padding: 0 18px;
+      background: linear-gradient(90deg, var(--cyan), var(--green));
+      color: #031116;
+      font: inherit;
+      font-weight: 950;
+      cursor: pointer;
     }
 
     footer {
@@ -391,37 +269,38 @@
     }
 
     footer p { margin: 6px 0; }
-
     footer a { text-decoration: none; }
 
-    @media (max-width: 980px) {
-      .hero,
-      .showcase,
-      .contact-layout,
-      .section-head {
+    @media (max-width: 840px) {
+      .nav {
         grid-template-columns: 1fr;
       }
 
-      .play-grid { grid-template-columns: 1fr; }
+      .tabs {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .screenshots,
+      .wide-screenshots {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
-    @media (max-width: 720px) {
-      .nav {
-        min-height: auto;
-        padding: 12px 0;
-        align-items: flex-start;
-        flex-direction: column;
+    @media (max-width: 520px) {
+      .tabs a {
+        min-height: 44px;
+        font-size: 12px;
+        padding: 8px 6px;
+      }
+
+      .screenshots,
+      .wide-screenshots {
+        grid-template-columns: 1fr;
       }
 
       .hero {
-        min-height: auto;
-        padding-top: 28px;
+        padding-top: 34px;
       }
-
-      .phone-strip { grid-template-columns: repeat(3, minmax(92px, 1fr)); }
-      .ipad-grid { grid-template-columns: 1fr; }
-      .contact-preview { grid-template-columns: 1fr; }
-      section { padding: 48px 0; }
     }
   </style>
 </head>
@@ -443,72 +322,22 @@
 
   <main>
     <section class="hero" aria-label="ヘキサゴン">
-      <div>
-        <span class="kicker">REALTIME HEX PUZZLE BATTLE</span>
-        <h1>つなげて、組んで、ぶつけ合う。</h1>
-        <p class="lead">同じ色を6つつなげる直感的なパズルに、形で攻めるフォーメーションとリアルタイム対戦の読み合いを加えた、新感覚バトルパズル。</p>
-        <div class="hero-actions">
-          <a class="button primary" href="#contact">お問い合わせ</a>
-          <a class="button" href="./privacy.html">プライバシーポリシー</a>
-        </div>
+      <div class="hero-copy">
+        <p class="kicker">REALTIME HEX PUZZLE BATTLE</p>
+        <h1>ヘキサゴン</h1>
+        <p class="lead">同じ色を6つつなげて消す、リアルタイム対戦パズル。フォーメーションと連鎖で勝利を目指そう。</p>
       </div>
-      <div class="hero-media">
-        <div class="feature-shot">
-          <img src="./assets/images/appstore/android-feature.png" alt="ヘキサゴンのキービジュアル">
-        </div>
-        <div class="phone-strip" aria-label="ゲーム画面プレビュー">
-          <img src="./assets/images/appstore/iphone-01.png" alt="ヘキサゴンのタイトルとゲーム紹介">
-          <img src="./assets/images/appstore/iphone-02.png" alt="ヘキサゴンの基本操作画面">
-          <img src="./assets/images/appstore/iphone-03.png" alt="ヘキサゴンのリアルタイム対戦画面">
-        </div>
-      </div>
-    </section>
-
-    <section aria-labelledby="play-title">
-      <div class="section-head">
-        <h2 id="play-title">シンプルなルールに、勝負の厚み。</h2>
-        <p>ボールを動かす、6つつなげる、形を作る。わかりやすい操作の中に、盤面づくりと一手先を読む駆け引きがあります。</p>
-      </div>
-      <div class="play-grid">
-        <article class="play-card">
-          <small>CONNECT</small>
-          <h3>6つ以上つなげて消す</h3>
-          <p>同じ色のボールをつなげて消すだけ。短時間でもテンポよく遊べます。</p>
-        </article>
-        <article class="play-card">
-          <small>FORMATION</small>
-          <h3>形でフォーメーション発動</h3>
-          <p>狙った形を作ることで、ただ消すだけではない戦略的な攻めが生まれます。</p>
-        </article>
-        <article class="play-card">
-          <small>BATTLE</small>
-          <h3>リアルタイムで競り合う</h3>
-          <p>相手の盤面にプレッシャーをかけながら、自分の盤面を立て直します。</p>
-        </article>
-      </div>
-    </section>
-
-    <section aria-labelledby="mode-title">
-      <div class="showcase">
-        <div class="showcase-copy">
-          <span class="kicker">RANK / ENDLESS / FRIEND</span>
-          <h2 id="mode-title">腕を磨くほど、盤面が見えてくる。</h2>
-          <p class="note">ランク戦、エンドレス、フレンド対戦、コンピュータ対戦で、自分のペースでも真剣勝負でも楽しめます。</p>
-        </div>
-        <div class="ipad-grid" aria-label="iPad画面プレビュー">
-          <img src="./assets/images/appstore/ipad-01.png" alt="ヘキサゴンのiPad紹介画面1">
-          <img src="./assets/images/appstore/ipad-03.png" alt="ヘキサゴンのiPad対戦画面">
-          <img src="./assets/images/appstore/ipad-05.png" alt="ヘキサゴンのiPadモード紹介画面">
-        </div>
+      <div class="hero-image">
+        <img src="./assets/images/appstore/android-feature.png" alt="ヘキサゴンのキービジュアル">
       </div>
     </section>
 
     <section aria-labelledby="screens-title">
       <div class="section-head">
         <h2 id="screens-title">スクリーンショット</h2>
-        <p>ゲームのルール、対戦、ランキング、プロフィールまで、実際の画面で雰囲気を確認できます。</p>
+        <p>実際のゲーム画面です。</p>
       </div>
-      <div class="gallery">
+      <div class="screenshots">
         <img src="./assets/images/appstore/iphone-01.png" alt="ヘキサゴンのスクリーンショット1">
         <img src="./assets/images/appstore/iphone-02.png" alt="ヘキサゴンのスクリーンショット2">
         <img src="./assets/images/appstore/iphone-03.png" alt="ヘキサゴンのスクリーンショット3">
@@ -516,35 +345,33 @@
         <img src="./assets/images/appstore/iphone-05.png" alt="ヘキサゴンのスクリーンショット5">
         <img src="./assets/images/appstore/iphone-06.png" alt="ヘキサゴンのスクリーンショット6">
       </div>
+      <div class="wide-screenshots">
+        <img src="./assets/images/appstore/ipad-01.png" alt="ヘキサゴンのiPadスクリーンショット1">
+        <img src="./assets/images/appstore/ipad-03.png" alt="ヘキサゴンのiPadスクリーンショット2">
+        <img src="./assets/images/appstore/ipad-05.png" alt="ヘキサゴンのiPadスクリーンショット3">
+      </div>
     </section>
 
     <section id="contact" aria-labelledby="contact-title">
       <div class="section-head">
         <h2 id="contact-title">お問い合わせ</h2>
-        <p>不具合、データ削除、購入、ランキングなどについて連絡できます。メール本文にプレイヤー情報を自動で入れます。</p>
       </div>
-      <div class="contact-layout">
-        <form class="contact-form" id="contactForm">
-          <label>
-            プレイヤー名
-            <input id="playerName" name="playerName" type="text" autocomplete="name" placeholder="例: Takuto">
-          </label>
-          <label>
-            プレイヤーID
-            <input id="playerId" name="playerId" type="text" inputmode="text" placeholder="例: ABCD-1234">
-          </label>
-          <label>
-            お問い合わせ内容
-            <textarea id="message" name="message" placeholder="できるだけ詳しく状況をご記入ください。"></textarea>
-          </label>
-          <p class="form-help">メールアプリが開き、入力内容を本文に入れた状態で送信準備をします。</p>
-          <button class="button primary" type="submit">メールを作成</button>
-        </form>
-        <div class="contact-preview" aria-label="お問い合わせ画面プレビュー">
-          <img src="./assets/images/appstore/contact-iphone.png" alt="iPhoneのお問い合わせ案内画面">
-          <img src="./assets/images/appstore/contact-ipad.png" alt="iPadのお問い合わせ案内画面">
-        </div>
-      </div>
+      <form class="contact-form" id="contactForm">
+        <label>
+          プレイヤー名
+          <input id="playerName" name="playerName" type="text" autocomplete="name" placeholder="例: プレイヤー">
+        </label>
+        <label>
+          プレイヤーID
+          <input id="playerId" name="playerId" type="text" inputmode="text" placeholder="例: ABC123">
+        </label>
+        <label>
+          お問い合わせ内容
+          <textarea id="message" name="message" placeholder="できるだけ詳しく状況をご記入ください。"></textarea>
+        </label>
+        <p class="form-help">メールアプリが開き、入力内容を本文に入れた状態で送信準備をします。</p>
+        <button class="button" type="submit">メールを作成</button>
+      </form>
     </section>
   </main>
 
