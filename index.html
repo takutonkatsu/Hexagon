@@ -211,6 +211,10 @@
       box-shadow: 0 18px 58px rgba(0, 0, 0, .22);
     }
 
+    #contact {
+      scroll-margin-top: 88px;
+    }
+
     label {
       display: grid;
       gap: 7px;
@@ -308,7 +312,7 @@
       }
 
       .screenshots {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .hero {
@@ -344,7 +348,7 @@
         <h1>ヘキサゴン</h1>
         <p class="lead">同じ色を6つつなげて消す、リアルタイム対戦パズル。フォーメーションと連鎖で勝利を目指そう。</p>
         <div class="download-actions">
-          <a class="button" href="https://apps.apple.com/app/id6746375328">App Store で入手</a>
+          <a class="button" href="https://apps.apple.com/jp/app/id6766177240">App Store で入手</a>
           <a class="button secondary" href="https://play.google.com/store/apps/details?id=com.takutonkatsu.hexagon">Google Play で入手</a>
         </div>
       </div>
@@ -386,6 +390,7 @@
           <textarea id="message" name="message" placeholder="できるだけ詳しく状況をご記入ください。"></textarea>
         </label>
         <p class="form-help">メールアプリが開き、入力内容を本文に入れた状態で送信準備をします。</p>
+        <p class="form-help">ご返信までに数日ほどお時間をいただく場合があります。あらかじめご了承ください。</p>
         <button class="button" type="submit">メールを作成</button>
       </form>
     </section>
