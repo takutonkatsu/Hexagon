@@ -114,6 +114,7 @@
       height: 44px;
       display: inline-grid;
       place-items: center;
+      justify-self: end;
       border: 1px solid var(--line);
       border-radius: 999px;
       background: rgba(11, 11, 12, .42);
@@ -434,9 +435,12 @@
     }
 
     @media (max-width: 880px) {
-      .nav,
       .statement {
         grid-template-columns: 1fr;
+      }
+
+      .nav {
+        grid-template-columns: auto auto;
       }
 
       h1 {
@@ -454,6 +458,7 @@
       }
 
       .nav {
+        grid-template-columns: auto auto;
         padding: 0;
       }
 
