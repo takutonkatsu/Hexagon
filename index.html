@@ -9,10 +9,13 @@
   <meta property="og:title" content="ヘキサゴン 公式サイト">
   <meta property="og:description" content="6つをつなげて消す、リアルタイム対戦ボールパズル。">
   <meta property="og:image" content="https://takutonkatsu.com/Hexagon/assets/images/appstore/android-feature.png">
+  <link rel="icon" type="image/png" href="./assets/images/Hexagon_icon.png">
+  <link rel="apple-touch-icon" href="./assets/images/Hexagon_icon.png">
   <title>ヘキサゴン 公式サイト</title>
   <style>
     :root {
       color-scheme: dark;
+      --header-h: 66px;
       --bg: #0b0b0c;
       --ink: #f4f0e8;
       --muted: #a7a099;
@@ -60,11 +63,12 @@
     }
 
     .nav {
-      min-height: 66px;
+      min-height: var(--header-h);
       display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-columns: auto auto;
       gap: 22px;
       align-items: center;
+      justify-content: space-between;
     }
 
     .brand {
@@ -105,24 +109,88 @@
       text-transform: uppercase;
     }
 
-    .tabs {
+    .menu-toggle {
+      width: 44px;
+      height: 44px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(11, 11, 12, .42);
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .menu-toggle span,
+    .menu-toggle::before,
+    .menu-toggle::after {
+      content: "";
+      display: block;
+      width: 18px;
+      height: 1.5px;
+      border-radius: 999px;
+      background: currentColor;
+      transition: transform .18s ease, opacity .18s ease;
+    }
+
+    .menu-toggle {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 16px;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .menu-toggle[aria-expanded="true"]::before {
+      transform: translateY(6.5px) rotate(45deg);
+    }
+
+    .menu-toggle[aria-expanded="true"] span {
+      opacity: 0;
+    }
+
+    .menu-toggle[aria-expanded="true"]::after {
+      transform: translateY(-6.5px) rotate(-45deg);
+    }
+
+    .tabs {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: max(18px, calc((100vw - 1180px) / 2));
+      width: min(320px, calc(100vw - 36px));
+      display: grid;
+      gap: 0;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(11, 11, 12, .94);
+      box-shadow: 0 22px 70px rgba(0, 0, 0, .42);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+    }
+
+    .tabs[hidden] {
+      display: none;
     }
 
     .tabs a {
       color: var(--muted);
-      font-size: .78rem;
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid rgba(244, 240, 232, .12);
+      padding: 0 18px;
+      font-size: .88rem;
       font-weight: 850;
       letter-spacing: .06em;
       text-decoration: none;
     }
 
+    .tabs a:last-child {
+      border-bottom: 0;
+    }
+
     .tabs a:hover,
     .tabs a:focus-visible {
       color: var(--ink);
+      background: rgba(244, 240, 232, .06);
       outline: none;
     }
 
@@ -138,7 +206,7 @@
 
     .hero-bg {
       position: absolute;
-      inset: 0;
+      inset: var(--header-h) 0 0;
       z-index: -2;
       background: #0b0b0c;
     }
@@ -289,20 +357,20 @@
     }
 
     .screens {
-      display: flex;
-      gap: 12px;
+      width: min(920px, 100%);
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
       margin-top: 30px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      scroll-snap-type: x mandatory;
     }
 
     .screens img {
-      flex: 0 0 min(220px, 72vw);
+      width: 100%;
+      max-height: 320px;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: #111;
-      scroll-snap-align: start;
+      object-fit: contain;
     }
 
     .contact-form {
@@ -371,10 +439,6 @@
         grid-template-columns: 1fr;
       }
 
-      .tabs {
-        justify-content: flex-start;
-      }
-
       h1 {
         font-size: 5.2rem;
       }
@@ -385,24 +449,32 @@
     }
 
     @media (max-width: 560px) {
+      :root {
+        --header-h: 74px;
+      }
+
       .nav {
-        padding: 14px 0;
+        padding: 0;
       }
 
       .tabs {
-        display: flex;
-        gap: 14px;
-        overflow-x: auto;
-        padding-bottom: 2px;
+        top: calc(100% + 8px);
+        right: 18px;
       }
 
-      .tabs a {
-        min-height: 40px;
-        border: 0;
-        border-bottom: 1px solid transparent;
-        border-radius: 0;
-        padding: 0 0 4px;
-        white-space: nowrap;
+      .screens {
+        display: flex;
+        width: 100%;
+        gap: 10px;
+        overflow-x: auto;
+        padding-bottom: 2px;
+        scroll-snap-type: x mandatory;
+      }
+
+      .screens img {
+        flex: 0 0 min(138px, 38vw);
+        max-height: 300px;
+        scroll-snap-align: start;
       }
 
       .hero {
@@ -435,6 +507,11 @@
       .contact-form .button {
         width: fit-content;
       }
+
+      .brand-icon {
+        width: 34px;
+        height: 34px;
+      }
     }
   </style>
 </head>
@@ -448,7 +525,10 @@
           <span>Official Site</span>
         </span>
       </a>
-      <div class="tabs">
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="メニューを開く" aria-controls="siteMenu" aria-expanded="false">
+        <span></span>
+      </button>
+      <div class="tabs" id="siteMenu" hidden>
         <a href="./terms.html">利用規約</a>
         <a href="./privacy.html">プライバシーポリシー</a>
         <a href="./tokushoho.html">特定商取引法表記</a>
@@ -545,7 +625,40 @@
   </footer>
 
   <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const siteMenu = document.getElementById('siteMenu');
     const form = document.getElementById('contactForm');
+
+    const closeMenu = () => {
+      siteMenu.hidden = true;
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'メニューを開く');
+    };
+
+    menuToggle.addEventListener('click', () => {
+      const willOpen = siteMenu.hidden;
+      siteMenu.hidden = !willOpen;
+      menuToggle.setAttribute('aria-expanded', String(willOpen));
+      menuToggle.setAttribute('aria-label', willOpen ? 'メニューを閉じる' : 'メニューを開く');
+    });
+
+    siteMenu.addEventListener('click', (event) => {
+      if (event.target.closest('a')) {
+        closeMenu();
+      }
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!siteMenu.hidden && !event.target.closest('.site-header')) {
+        closeMenu();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !siteMenu.hidden) {
+        closeMenu();
+      }
+    });
 
     form.addEventListener('submit', (event) => {
       event.preventDefault();
