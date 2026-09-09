@@ -13,16 +13,14 @@
   <style>
     :root {
       color-scheme: dark;
-      --bg: #101114;
-      --ink: #f7f3eb;
-      --paper: #fff8e6;
-      --muted: #b8b1a4;
-      --line: rgba(247, 243, 235, .16);
-      --surface: rgba(255, 255, 255, .055);
-      --surface-strong: rgba(255, 255, 255, .09);
-      --hex: #ffd24a;
-      --blue: #46b3ff;
-      --green: #6de59b;
+      --bg: #0b0b0c;
+      --ink: #f4f0e8;
+      --muted: #a7a099;
+      --line: rgba(244, 240, 232, .18);
+      --line-strong: rgba(244, 240, 232, .34);
+      --yellow: #f5c84b;
+      --blue: #51b8ff;
+      --panel: rgba(244, 240, 232, .07);
     }
 
     * { box-sizing: border-box; }
@@ -32,14 +30,10 @@
     body {
       margin: 0;
       min-width: 320px;
+      background: var(--bg);
       color: var(--ink);
-      background:
-        linear-gradient(rgba(255, 255, 255, .034) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, .026) 1px, transparent 1px),
-        linear-gradient(180deg, #15161a 0%, #101114 46%, #0a0b0e 100%);
-      background-size: 30px 30px, 30px 30px, auto;
       font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
-      line-height: 1.7;
+      line-height: 1.65;
     }
 
     a { color: inherit; }
@@ -51,25 +45,25 @@
     }
 
     .site-header {
-      position: sticky;
-      top: 0;
+      position: fixed;
+      inset: 0 0 auto;
       z-index: 20;
-      border-bottom: 1px solid var(--line);
-      background: rgba(16, 17, 20, .86);
-      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(244, 240, 232, .14);
+      background: rgba(11, 11, 12, .72);
+      backdrop-filter: blur(18px);
     }
 
     .nav,
-    main {
-      width: min(1120px, calc(100% - 32px));
+    .section-inner {
+      width: min(1180px, calc(100% - 36px));
       margin: 0 auto;
     }
 
     .nav {
-      padding: 14px 0;
+      min-height: 66px;
       display: grid;
       grid-template-columns: auto minmax(0, 1fr);
-      gap: 18px;
+      gap: 22px;
       align-items: center;
     }
 
@@ -80,8 +74,7 @@
 
     .brand strong {
       display: block;
-      color: var(--ink);
-      font-size: 20px;
+      font-size: 1rem;
       font-weight: 950;
       letter-spacing: .04em;
       line-height: 1.1;
@@ -90,162 +83,208 @@
     .brand span {
       display: block;
       color: var(--muted);
-      font-size: 11px;
+      font-size: .68rem;
       font-weight: 850;
-      letter-spacing: .14em;
+      letter-spacing: .16em;
       line-height: 1.1;
       text-transform: uppercase;
     }
 
     .tabs {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 16px;
     }
 
-    .tabs a,
-    .button {
-      min-height: 42px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 0 14px;
-      background: rgba(255, 255, 255, .055);
-      color: var(--ink);
-      font-size: 13px;
+    .tabs a {
+      color: var(--muted);
+      font-size: .78rem;
       font-weight: 850;
-      line-height: 1.35;
-      text-align: center;
+      letter-spacing: .06em;
       text-decoration: none;
     }
 
     .tabs a:hover,
-    .tabs a:focus-visible,
-    .button:hover,
-    .button:focus-visible {
-      border-color: rgba(255, 210, 74, .78);
+    .tabs a:focus-visible {
+      color: var(--ink);
       outline: none;
     }
 
     .hero {
-      padding: 58px 0 66px;
+      position: relative;
+      min-height: 86svh;
+      padding: 130px 0 74px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
       display: grid;
-      grid-template-columns: minmax(0, .92fr) minmax(320px, 1.08fr);
-      gap: 36px;
-      align-items: center;
+      align-items: end;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+    }
+
+    .hero-bg img {
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(.95) contrast(1.02);
+      opacity: .62;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(90deg, rgba(11, 11, 12, .96) 0%, rgba(11, 11, 12, .72) 48%, rgba(11, 11, 12, .42) 100%),
+        linear-gradient(0deg, #0b0b0c 0%, rgba(11, 11, 12, .1) 46%, rgba(11, 11, 12, .38) 100%);
     }
 
     .kicker,
     .section-label {
-      margin: 0 0 16px;
+      margin: 0 0 18px;
       color: var(--muted);
-      font-size: 13px;
-      font-weight: 850;
-      letter-spacing: .16em;
+      font-size: .78rem;
+      font-weight: 900;
+      letter-spacing: .18em;
       text-transform: uppercase;
     }
 
     h1 {
       margin: 0;
-      font-size: 7rem;
-      line-height: .92;
+      max-width: 920px;
+      font-size: 7.4rem;
+      line-height: .9;
       letter-spacing: 0;
     }
 
     .lead {
-      margin: 24px 0 0;
-      max-width: 650px;
-      color: var(--paper);
-      font-size: 1.45rem;
+      margin: 28px 0 0;
+      max-width: 720px;
+      color: var(--ink);
+      font-size: 1.52rem;
       font-weight: 850;
-      line-height: 1.55;
+      line-height: 1.6;
     }
 
-    .download-actions {
+    .actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 24px;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .button {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      padding: 0 16px;
+      background: rgba(244, 240, 232, .08);
+      color: var(--ink);
+      font: inherit;
+      font-size: .92rem;
+      font-weight: 900;
+      letter-spacing: .04em;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
     }
 
     .button.primary {
-      border-color: rgba(255, 210, 74, .78);
-      background: var(--hex);
-      color: #15120a;
-      font-size: 15px;
+      border-color: rgba(245, 200, 75, .76);
+      background: var(--yellow);
+      color: #151108;
     }
 
-    .hero-image {
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--surface);
+    .button:hover,
+    .button:focus-visible {
+      border-color: var(--yellow);
+      outline: none;
     }
 
     section {
-      padding: 64px 0;
-      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 84px 0;
+    }
+
+    .statement {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 48px;
+      align-items: start;
     }
 
     h2 {
       margin: 0;
-      font-size: 3.25rem;
-      line-height: 1.15;
+      font-size: 4rem;
+      line-height: 1.08;
       letter-spacing: 0;
     }
 
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 26px;
-    }
-
-    .feature {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 18px;
-      background: var(--surface);
-    }
-
-    .feature strong {
-      display: block;
-      margin-bottom: 8px;
-      color: var(--ink);
-      font-size: 17px;
-    }
-
-    .feature p,
+    .statement p,
     .section-copy,
     .form-help {
       margin: 0;
       color: var(--muted);
-      font-weight: 700;
+      font-size: 1rem;
+      font-weight: 730;
     }
 
-    .screenshots {
+    .rules {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 26px;
+      gap: 0;
+      border-top: 1px solid var(--line);
+      margin-top: 34px;
     }
 
-    .screenshots img {
+    .rule {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 28px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .rule strong {
+      color: var(--ink);
+      font-size: 1.08rem;
+    }
+
+    .rule span {
+      color: var(--muted);
+      font-weight: 720;
+    }
+
+    .screens {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(160px, 1fr));
+      gap: 12px;
+      margin-top: 30px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .screens img {
+      min-width: 160px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: var(--surface);
+      background: #111;
     }
 
     .contact-form {
-      max-width: 720px;
+      max-width: 760px;
       display: grid;
       gap: 14px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: clamp(18px, 3vw, 26px);
-      background: var(--surface-strong);
+      margin-top: 30px;
+      border-top: 1px solid var(--line);
+      padding-top: 26px;
     }
 
     #contact { scroll-margin-top: 88px; }
@@ -253,21 +292,21 @@
     label {
       display: grid;
       gap: 7px;
-      color: var(--paper);
-      font-size: 14px;
+      color: var(--ink);
+      font-size: .9rem;
       font-weight: 850;
     }
 
     input,
     textarea {
       width: 100%;
-      border: 1px solid rgba(247, 243, 235, .18);
+      border: 1px solid rgba(244, 240, 232, .22);
       border-radius: 8px;
-      padding: 12px 13px;
-      background: #0b0c0f;
+      padding: 13px 14px;
+      background: rgba(244, 240, 232, .06);
       color: var(--ink);
       font: inherit;
-      font-weight: 700;
+      font-weight: 720;
     }
 
     textarea {
@@ -277,55 +316,72 @@
 
     input:focus,
     textarea:focus {
-      border-color: rgba(255, 210, 74, .85);
+      border-color: rgba(245, 200, 75, .82);
       outline: none;
     }
 
     footer {
-      border-top: 1px solid var(--line);
-      padding: 30px 16px;
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 32px 0;
       color: var(--muted);
-      text-align: center;
-      font-size: 13px;
-      font-weight: 700;
+      font-size: .82rem;
+      font-weight: 720;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 14px;
     }
 
-    footer p { margin: 6px 0; }
-    footer a { text-decoration: none; }
+    footer a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-    @media (max-width: 860px) {
+    @media (max-width: 880px) {
       .nav,
-      .hero {
+      .statement {
         grid-template-columns: 1fr;
       }
 
       .tabs {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .feature-grid,
-      .screenshots {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        justify-content: flex-start;
       }
 
       h1 {
-        font-size: 5rem;
+        font-size: 5.2rem;
       }
 
       h2 {
-        font-size: 2.75rem;
+        font-size: 3rem;
       }
     }
 
-    @media (max-width: 520px) {
+    @media (max-width: 560px) {
+      .nav {
+        padding: 14px 0;
+      }
+
+      .tabs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
       .tabs a {
-        min-height: 44px;
-        padding: 8px 6px;
-        font-size: 12px;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 7px;
+        text-align: center;
       }
 
       .hero {
-        padding-top: 38px;
+        min-height: 82svh;
+        padding-top: 170px;
       }
 
       h1 {
@@ -333,20 +389,23 @@
       }
 
       h2 {
-        font-size: 2.15rem;
+        font-size: 2.25rem;
       }
 
       .lead {
-        font-size: 1.15rem;
+        font-size: 1.14rem;
       }
 
-      .feature-grid,
-      .screenshots {
+      section {
+        padding: 62px 0;
+      }
+
+      .rule {
         grid-template-columns: 1fr;
+        gap: 8px;
       }
 
-      .download-actions .button,
-      .contact-form .button {
+      .button {
         width: 100%;
       }
     }
@@ -370,78 +429,89 @@
 
   <main>
     <section class="hero" aria-label="ヘキサゴン">
-      <div class="hero-copy">
+      <div class="hero-bg" aria-hidden="true">
+        <img src="./assets/images/appstore/android-feature.png" alt="">
+      </div>
+      <div class="section-inner">
         <p class="kicker">Hexagon</p>
         <h1>ヘキサゴン</h1>
-        <p class="lead">リアルタイム対戦ボールパズル。6つをつなげて消し、連鎖とフォーメーションで勝利を狙うゲームです。</p>
-        <div class="download-actions">
+        <p class="lead">6つをつなげて消す、リアルタイム対戦ボールパズル。連鎖を組み、盤面を整え、相手より先に勝利を狙う。</p>
+        <div class="actions">
           <a class="button primary" href="https://apps.apple.com/jp/app/id6766177240">App Store で入手</a>
         </div>
       </div>
-      <div class="hero-image">
-        <img src="./assets/images/appstore/android-feature.png" alt="ヘキサゴンのキービジュアル">
-      </div>
     </section>
 
-    <section aria-labelledby="features-title">
-      <p class="section-label">Play</p>
-      <h2 id="features-title">短いルールで、盤面を組み立てる。</h2>
-      <div class="feature-grid">
-        <div class="feature">
-          <strong>6つをつなげる</strong>
-          <p>同じ色のボールをつなげて消す、すぐにわかるパズルルール。</p>
+    <section aria-labelledby="about-title">
+      <div class="section-inner statement">
+        <div>
+          <p class="section-label">About</p>
+          <h2 id="about-title">短いルールで、盤面を読む。</h2>
         </div>
-        <div class="feature">
-          <strong>連鎖を狙う</strong>
-          <p>置き方と消し方を考えて、次の一手につながる形を作る。</p>
-        </div>
-        <div class="feature">
-          <strong>リアルタイム対戦</strong>
-          <p>相手の動きも見ながら、スピードと判断力で競い合う。</p>
+        <div>
+          <p class="section-copy">同じ色のボールを6つつなげるだけ。けれど、どこに置くか、いつ消すか、次に何を残すかで展開は変わります。</p>
+          <div class="rules">
+            <div class="rule">
+              <strong>Connect</strong>
+              <span>同じ色を6つつなげて消す。</span>
+            </div>
+            <div class="rule">
+              <strong>Chain</strong>
+              <span>次の形を残しながら、連鎖を狙う。</span>
+            </div>
+            <div class="rule">
+              <strong>Battle</strong>
+              <span>リアルタイムで相手と競い、勝利を目指す。</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <section aria-labelledby="screens-title">
-      <p class="section-label">Screens</p>
-      <h2 id="screens-title">スクリーンショット</h2>
-      <p class="section-copy">実際のゲーム画面です。</p>
-      <div class="screenshots">
-        <img src="./assets/images/appstore/iphone-01.png" alt="ヘキサゴンのスクリーンショット1">
-        <img src="./assets/images/appstore/iphone-02.png" alt="ヘキサゴンのスクリーンショット2">
-        <img src="./assets/images/appstore/iphone-03.png" alt="ヘキサゴンのスクリーンショット3">
-        <img src="./assets/images/appstore/iphone-04.png" alt="ヘキサゴンのスクリーンショット4">
-        <img src="./assets/images/appstore/iphone-05.png" alt="ヘキサゴンのスクリーンショット5">
-        <img src="./assets/images/appstore/iphone-06.png" alt="ヘキサゴンのスクリーンショット6">
+      <div class="section-inner">
+        <p class="section-label">Screens</p>
+        <h2 id="screens-title">ゲーム画面</h2>
+        <p class="section-copy">実際のプレイ画面です。</p>
+        <div class="screens">
+          <img src="./assets/images/appstore/iphone-01.png" alt="ヘキサゴンのスクリーンショット1">
+          <img src="./assets/images/appstore/iphone-02.png" alt="ヘキサゴンのスクリーンショット2">
+          <img src="./assets/images/appstore/iphone-03.png" alt="ヘキサゴンのスクリーンショット3">
+          <img src="./assets/images/appstore/iphone-04.png" alt="ヘキサゴンのスクリーンショット4">
+          <img src="./assets/images/appstore/iphone-05.png" alt="ヘキサゴンのスクリーンショット5">
+          <img src="./assets/images/appstore/iphone-06.png" alt="ヘキサゴンのスクリーンショット6">
+        </div>
       </div>
     </section>
 
     <section id="contact" aria-labelledby="contact-title">
-      <p class="section-label">Contact</p>
-      <h2 id="contact-title">お問い合わせ</h2>
-      <form class="contact-form" id="contactForm">
-        <label>
-          プレイヤー名
-          <input id="playerName" name="playerName" type="text" autocomplete="name" placeholder="例: プレイヤー">
-        </label>
-        <label>
-          プレイヤーID
-          <input id="playerId" name="playerId" type="text" inputmode="text" placeholder="例: ABC123">
-        </label>
-        <label>
-          お問い合わせ内容
-          <textarea id="message" name="message" placeholder="できるだけ詳しく状況をご記入ください。"></textarea>
-        </label>
-        <p class="form-help">メールアプリが開き、入力内容を本文に入れた状態で送信準備をします。</p>
-        <p class="form-help">ご返信までに数日ほどお時間をいただく場合があります。あらかじめご了承ください。</p>
-        <button class="button primary" type="submit">メールを作成</button>
-      </form>
+      <div class="section-inner">
+        <p class="section-label">Contact</p>
+        <h2 id="contact-title">お問い合わせ</h2>
+        <form class="contact-form" id="contactForm">
+          <label>
+            プレイヤー名
+            <input id="playerName" name="playerName" type="text" autocomplete="name" placeholder="例: プレイヤー">
+          </label>
+          <label>
+            プレイヤーID
+            <input id="playerId" name="playerId" type="text" inputmode="text" placeholder="例: ABC123">
+          </label>
+          <label>
+            お問い合わせ内容
+            <textarea id="message" name="message" placeholder="できるだけ詳しく状況をご記入ください。"></textarea>
+          </label>
+          <p class="form-help">メールアプリが開き、入力内容を本文に入れた状態で送信準備をします。</p>
+          <p class="form-help">ご返信までに数日ほどお時間をいただく場合があります。あらかじめご了承ください。</p>
+          <button class="button primary" type="submit">メールを作成</button>
+        </form>
+      </div>
     </section>
   </main>
 
   <footer>
-    <p><a href="https://takutonkatsu.com/">takutonkatsu</a> / <a href="./terms.html">利用規約</a> / <a href="./privacy.html">プライバシーポリシー</a> / <a href="./tokushoho.html">特定商取引法表記</a> / <a href="#contact">お問い合わせ</a></p>
-    <p>&copy; 2026 Takutonkatsu. All rights reserved.</p>
+    <span><a href="https://takutonkatsu.com/">takutonkatsu</a> / <a href="./terms.html">利用規約</a> / <a href="./privacy.html">プライバシーポリシー</a> / <a href="./tokushoho.html">特定商取引法表記</a></span>
+    <span>&copy; 2026 Takutonkatsu</span>
   </footer>
 
   <script>
