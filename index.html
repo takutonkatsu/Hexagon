@@ -68,8 +68,23 @@
     }
 
     .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
       text-decoration: none;
       white-space: nowrap;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .brand .brand-copy {
+      display: grid;
+      gap: 2px;
     }
 
     .brand strong {
@@ -80,7 +95,7 @@
       line-height: 1.1;
     }
 
-    .brand span {
+    .brand-copy span {
       display: block;
       color: var(--muted);
       font-size: .68rem;
@@ -179,14 +194,15 @@
     }
 
     .button {
-      min-height: 44px;
+      min-height: 42px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid var(--line-strong);
-      border-radius: 8px;
-      padding: 0 16px;
-      background: rgba(244, 240, 232, .08);
+      border: 0;
+      border-bottom: 1px solid var(--line-strong);
+      border-radius: 0;
+      padding: 0 2px 6px;
+      background: transparent;
       color: var(--ink);
       font: inherit;
       font-size: .92rem;
@@ -198,14 +214,21 @@
     }
 
     .button.primary {
-      border-color: rgba(245, 200, 75, .76);
-      background: var(--yellow);
-      color: #151108;
+      border-bottom-color: rgba(245, 200, 75, .84);
+      color: var(--ink);
+    }
+
+    .button.primary::after {
+      content: "↗";
+      margin-left: 10px;
+      color: var(--yellow);
+      font-size: .95em;
     }
 
     .button:hover,
     .button:focus-visible {
-      border-color: var(--yellow);
+      color: var(--yellow);
+      border-bottom-color: var(--yellow);
       outline: none;
     }
 
@@ -263,19 +286,20 @@
     }
 
     .screens {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(160px, 1fr));
+      display: flex;
       gap: 12px;
       margin-top: 30px;
       overflow-x: auto;
       padding-bottom: 4px;
+      scroll-snap-type: x mandatory;
     }
 
     .screens img {
-      min-width: 160px;
+      flex: 0 0 min(220px, 72vw);
       border: 1px solid var(--line);
       border-radius: 8px;
       background: #111;
+      scroll-snap-align: start;
     }
 
     .contact-form {
@@ -363,20 +387,19 @@
       }
 
       .tabs {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
+        display: flex;
+        gap: 14px;
+        overflow-x: auto;
+        padding-bottom: 2px;
       }
 
       .tabs a {
         min-height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        padding: 7px;
-        text-align: center;
+        border: 0;
+        border-bottom: 1px solid transparent;
+        border-radius: 0;
+        padding: 0 0 4px;
+        white-space: nowrap;
       }
 
       .hero {
@@ -405,8 +428,9 @@
         gap: 8px;
       }
 
-      .button {
-        width: 100%;
+      .actions .button,
+      .contact-form .button {
+        width: fit-content;
       }
     }
   </style>
@@ -415,8 +439,11 @@
   <header class="site-header">
     <nav class="nav" aria-label="サイト内ナビゲーション">
       <a class="brand" href="./index.html" aria-label="ヘキサゴン公式サイト ホーム">
-        <strong>ヘキサゴン</strong>
-        <span>Official Site</span>
+        <img class="brand-icon" src="./assets/images/Hexagon_icon.png" alt="">
+        <span class="brand-copy">
+          <strong>ヘキサゴン</strong>
+          <span>Official Site</span>
+        </span>
       </a>
       <div class="tabs">
         <a href="./terms.html">利用規約</a>
